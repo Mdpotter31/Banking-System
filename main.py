@@ -1,24 +1,36 @@
 import other
+greeted = False
+
+#Greeting Loop
+while True: 
+    if not greeted:
+        other.greeting()
+        greeted = True
+        
+
+    command = input("Please type: help ")
 
 
-help = input(other.greeting())
 
-if help == "help":
-    command = input(other.help())
+    if command == "help":
+        other.help()
+            
+        
     
-else:
-    other.miss_Type()
-
-if command == "view_accounts":
-    other.view_accounts()
-    other.select_accounts()
-
-if command == "create_account":
-    other.create_account()
+    elif command == "view_accounts":
+        other.view_accounts()
+        other.select_accounts()
+       
     
+    elif command == "create_account":
+        other.create_account()
+        
 
-if command == "exit":
-    other.exit()
+    elif command == "exit":
+        print("Exiting...")
+        exit()
+        
 
-else:
-    other.miss_Type()
+
+    else:
+        other.miss_Type()

@@ -1,5 +1,5 @@
 import accounts
-global account_amount
+
 
 def greeting():
   print("Welcome to your first day on the job as a bank teller.")
@@ -29,13 +29,13 @@ def view_accounts():
 
 
 def create_account():
-  print("Creating Accounts...")
+    print("Creating Accounts...")
+    first_name = input("Please provide your first name: ")
+    initial_amount = input("Please provide the initial amount for your account: ")
+    account_number = accounts.number_generation()  # Correct function call here
 
-  first_name = input("Please provide your first name.")
-  initial_amount = input("Please provide the initial amount for your acount.")
-  account_number = 1212
-
-  accounts.add_account(first_name, account_number, initial_amount)
+    accounts.add_account(first_name, account_number, initial_amount)
+    print(f"Account created! Name: {first_name}, Account Number: {account_number}, Initial Amount: {initial_amount}")
 
 
 def select_accounts():
@@ -47,42 +47,35 @@ def select_accounts():
   account_number = int(account_choice)
   for account in accounts.accounts_data:
     if account["account"] == account_number:
-      account_amount = account["amount"]
+      account_amount = int(account["amount"])
       print("You chose account " + account_choice)
       print(f"The account has {account_amount}")
       break
   else:
     print("Account number not recoginized")
+  while True:
+    selection = input("What would you like to edit in the account? Please type withdraw or deposit."
+  )
+ 
+    if selection == "withdraw":
+      withdraw_amount = int(input("How much would you like to withdraw?"))
 
+      if withdraw_amount <= account_amount:
+        print("You get $", withdraw_amount)
+        amount_left = account_amount - withdraw_amount
+        print("There is $", amount_left, " in the account.")
+        account["amount"] = amount_left  #Needs to update the actual amount
+        break
 
-  selection = input(
-    "What would you like to edit in the account? Please type withdraw or deposit."
-)
-  if selection == "withdraw":
-    withdraw_amount = int(input("How much would you like to withdraw?"))
-    
-    if withdraw_amount <= account_amount:
-      print("You get $", withdraw_amount)
-      amount_left = account_amount - withdraw_amount
-      print("There is $", amount_left , " in the account.")
+      else:
+        print("Not enough funds to withdraw amount.")
 
-
-    else:  
-      print("Not enough funds to withdraw amount.")
-      
-      
-      
-  elif selection == "deposit":
+    elif selection == "deposit":
       deposit_amount = int(input("How much are you depositing?"))
-      
       print("You deposited $", deposit_amount)
       amount_left = account_amount + deposit_amount
-      print("There is $", amount_left , " in the account.")
-      
-      
-  else:
+      print("There is $", amount_left, " in the account.")
+      account["amount"] = amount_left  #Needs to update the actual amount
+
+    else:
       miss_Type()
-
-
-def exit():
-  print("Exiting...")
